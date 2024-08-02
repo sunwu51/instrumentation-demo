@@ -67,12 +67,11 @@ public class MyAttach {
                 break;
             }
         }
-        scanner.close();
         System.out.printf("============The PID is %s%n", pid);
 
         System.out.println(">>>>>>>>>>>>Please enter the args");
-        scanner = new Scanner(System.in);
         String arg = scanner.nextLine();
+        arg = scanner.nextLine();
         String curJarPath = Paths.get(currentUrl().toURI()).toString();
         try {
             VirtualMachine jvm = VirtualMachine.attach(pid);
