@@ -67,11 +67,16 @@ public class MyAttach {
                 break;
             }
         }
+        scanner.close();
         System.out.printf("============The PID is %s%n", pid);
-        VirtualMachine jvm = VirtualMachine.attach(pid);
+
+        System.out.println(">>>>>>>>>>>>Please enter the args");
+        scanner = new Scanner(System.in);
+        String arg = scanner.nextLine();
         String curJarPath = Paths.get(currentUrl().toURI()).toString();
         try {
-            jvm.loadAgent(curJarPath);
+            VirtualMachine jvm = VirtualMachine.attach(pid);
+            jvm.loadAgent(curJarPath, arg);
             jvm.detach();
         } catch (Exception e) {
             if (!Objects.equals(e.getMessage(), "0")) {
@@ -92,8 +97,7 @@ public class MyAttach {
         if (!toolsJarFile.exists()) {
             throw new Exception("tools.jar not found at: " + toolsJarFile.getPath());
         }
-        URL toolsJarUrl = toolsJarFile.toURI().toURL();
-        return toolsJarUrl;
+        return toolsJarFile.toURI().toURL();
     }
 
     private static URL currentUrl() {
